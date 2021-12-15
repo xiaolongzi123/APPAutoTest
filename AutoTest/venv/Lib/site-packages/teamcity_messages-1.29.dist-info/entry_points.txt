@@ -1,0 +1,12 @@
+[flake8.extension]
+teamcity-messages = teamcity.flake8_plugin:TeamcityReport
+
+[flake8.report]
+teamcity-messages = teamcity.flake8_plugin:TeamcityReport
+
+[nose.plugins.0.10]
+teamcity-report = teamcity.nose_report:TeamcityReport
+
+[pytest11]
+pytest-teamcity = teamcity.pytest_plugin
+

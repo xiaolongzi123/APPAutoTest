@@ -1,0 +1,6 @@
+2021-11-08 11:18:21,801 - TestMyLog - INFO - 开始执行用例
+2021-11-08 11:18:21,801 - TestMyLog - INFO - 开始执行用例
+2021-11-08 11:19:15,094 - TestMyLog - INFO - 页面未找到元素://android.widget.EditText[@text='40']
+2021-11-08 11:19:15,094 - TestMyLog - INFO - 页面未找到元素://android.widget.EditText[@text='40']
+2021-11-08 11:19:17,176 - TestMyLog - INFO - 用例执行结束
+2021-11-08 11:19:17,176 - TestMyLog - INFO - 用例执行结束

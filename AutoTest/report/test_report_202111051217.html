@@ -1,0 +1,2237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>iTablet自动化测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.3"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Adil
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:Error   // pt hiddenRow, ft none
+4:All     //pt none, ft none
+下面设置 按钮展开逻辑  --Yang Yao Jun
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2 || level ==3 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+    //console.log(detail_class.length)
+    if (level == 3) {
+        for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="收起"
+        }
+    }
+    else{
+            for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="详细"
+        }
+    }
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&');
+    s = s.replace(/</g,'<');
+    s = s.replace(/>/g,'>');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">iTablet自动化测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> lq</p>
+<p class='attribute'><strong>开始时间 : </strong> 2021-11-05 12:17:10</p>
+<p class='attribute'><strong>合计耗时 : </strong> 2:03:35.515905</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 79，通过 78，错误 1，通过率= 98.73%</p>
+
+<p class='description'>执行人：lq</p>
+</div>
+
+
+
+    <p id='show_detail_line'>
+    <a class="btn btn-primary" href='javascript:showCase(0)'>通过率 [98.73% ]</a>
+    <a class="btn btn-success" href='javascript:showCase(2)'>通过[ 78 ]</a>
+    <a class="btn btn-warning" href='javascript:showCase(3)'>错误[ 1 ]</a>
+    <a class="btn btn-danger" href='javascript:showCase(1)'>失败[ 0 ]</a>
+    <a class="btn btn-info" href='javascript:showCase(4)'>所有[ 79 ]</a>
+    </p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>错误</td>
+    <td>失败</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>testCase.test_export.MyTestCaseExport</td>
+    <td class="text-center">18</td>
+    <td class="text-center">17</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',18)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_LineExportToKml</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_1: Line.kml
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_LineExportToKmz</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_2: Line.kml
+Line.kmz
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_LineExportToMif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_3: Line.kml
+Line.kmz
+Line.mid
+Line.mif
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_LineExportToShp</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_4: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_PointExportToGpx</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_5: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.gpx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_PointExportToKml</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_6: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.gpx
+Point.kml
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_PointExportToKmz</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_7: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.gpx
+Point.kml
+Point.kmz
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_PointExportToMif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_8: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_PointExportToShp</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_9: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_RegionExportToKml</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_10: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.kml
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_RegionExportToKmz</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_11: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.kml
+Region.kmz
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_RegionExportToMif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_12: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_RegionExportToShp</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_13: Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_cadExportToMif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_14: CAD.mid
+CAD.mif
+Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_gridExportToImg</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_15: CAD.mid
+CAD.mif
+DEM.img
+Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_gridExportToTif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_16: CAD.mid
+CAD.mif
+DEM.img
+DEM.tif
+Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_imgExportToImg</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_17'>通过</button>
+    <div id='div_pt1_17' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_17'>通过</button>
+    <div id='div_pt1_17' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_17: CAD.mid
+CAD.mif
+DEM.img
+DEM.tif
+Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+yufengIMG.img
+
+True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_18' class='none'>
+    <td class='errorCase'><div class='testcase'>test_imgExportToTif</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_18'>错误</button>
+    <div id='div_ft1_18' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_18'>错误</button>
+    <div id='div_ft1_18' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft1_18: CAD.mid
+CAD.mif
+DEM.img
+DEM.tif
+Line.dbf
+Line.kml
+Line.kmz
+Line.mid
+Line.mif
+Line.prj
+Line.shp
+Line.shx
+Point.dbf
+Point.gpx
+Point.kml
+Point.kmz
+Point.mid
+Point.mif
+Point.prj
+Point.shp
+Point.shx
+Region.dbf
+Region.kml
+Region.kmz
+Region.mid
+Region.mif
+Region.prj
+Region.shp
+Region.shx
+yufengIMG.img
+yufengIMG.tif
+
+True
+Traceback (most recent call last):
+  File "F:\CI\iTablet\AutoTest\testCase\test_export.py", line 37, in tearDown
+    baseOperation.home(self.driver)
+  File "F:\CI\iTablet\AutoTest\testTools\baseOperation.py", line 165, in home
+    driver.keyevent(3)
+  File "I:\longqian\PycharmProjects\AutoTest\venv\lib\site-packages\appium\webdriver\extensions\keyboard.py", line 82, in keyevent
+    self.execute(Command.KEY_EVENT, data)
+  File "I:\longqian\PycharmProjects\AutoTest\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "I:\longqian\PycharmProjects\AutoTest\venv\lib\site-packages\appium\webdriver\errorhandler.py", line 31, in check_response
+    raise wde
+  File "I:\longqian\PycharmProjects\AutoTest\venv\lib\site-packages\appium\webdriver\errorhandler.py", line 26, in check_response
+    super().check_response(response)
+  File "I:\longqian\PycharmProjects\AutoTest\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: A session is either terminated or not started
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>testCase.test_theme_map.MyTestCaseTheme</td>
+    <td class="text-center">61</td>
+    <td class="text-center">61</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',61)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_1: 1101111011111111111111111111111111111111111011111111111100000000
+1101111011111111111111111111111111111111111011111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme10</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_2: 1101111011111111111111111111101111111111111111111111110100000000
+1101111011111111111111111111101111111111111111111111110100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme11</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_3: 1101111011111111111111011111111111111101111111111111101100000000
+1101111011111111111111011111111111111101111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme12</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_4: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme13</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_5: 1101111011111101111111111111111111111111111111111111111100000000
+1101111011111101111111111111111111111111111111111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme14</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_6'>通过</button>
+    <div id='div_pt2_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_6'>通过</button>
+    <div id='div_pt2_6' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_6: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme15</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_7'>通过</button>
+    <div id='div_pt2_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_7'>通过</button>
+    <div id='div_pt2_7' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_7: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme16</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_8'>通过</button>
+    <div id='div_pt2_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_8'>通过</button>
+    <div id='div_pt2_8' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_8: 1101111011111111111110111111111111110111011000111111111100000000
+1101111011111111111110111111111111110111011000111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme17</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_9'>通过</button>
+    <div id='div_pt2_9' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_9'>通过</button>
+    <div id='div_pt2_9' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_9: 1101111011111111111111011111111111111101111111111111101100000000
+1101111011111111111111011111111111111101111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme18</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_10'>通过</button>
+    <div id='div_pt2_10' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_10'>通过</button>
+    <div id='div_pt2_10' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_10: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme19</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_11'>通过</button>
+    <div id='div_pt2_11' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_11'>通过</button>
+    <div id='div_pt2_11' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_11: 1101111011111111111111111111111111100111011000111111111100000000
+1101111011111111111111111111111111100111011000111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_12'>通过</button>
+    <div id='div_pt2_12' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_12'>通过</button>
+    <div id='div_pt2_12' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_12: 1101111011111111111111111111111111111111111111111111111100000000
+1101111011111111111111111111111111111111111111111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme20</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_13'>通过</button>
+    <div id='div_pt2_13' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_13'>通过</button>
+    <div id='div_pt2_13' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_13: 1101111011111111111111011111110111111111111111111111101100000000
+1101111011111111111111011111111111111101111111111111101100000000
+均值哈希算法相似度： 98
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme21</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_14'>通过</button>
+    <div id='div_pt2_14' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_14'>通过</button>
+    <div id='div_pt2_14' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_14: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme22</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_15'>通过</button>
+    <div id='div_pt2_15' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_15'>通过</button>
+    <div id='div_pt2_15' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_15: 1101111011111111111111111111111111111111111011111111111100000000
+1101111011111111111111111111111111111111111011111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme23</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_16'>通过</button>
+    <div id='div_pt2_16' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_16'>通过</button>
+    <div id='div_pt2_16' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_16: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme24</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_17'>通过</button>
+    <div id='div_pt2_17' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_17'>通过</button>
+    <div id='div_pt2_17' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_17: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme25</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_18'>通过</button>
+    <div id='div_pt2_18' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_18'>通过</button>
+    <div id='div_pt2_18' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_18: 1101111011111111111111111111111111111111111011111111111100000000
+1101111011111111111111111111111111111111111011111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_19' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme26</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_19'>通过</button>
+    <div id='div_pt2_19' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_19'>通过</button>
+    <div id='div_pt2_19' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_19: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_20' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme27</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_20'>通过</button>
+    <div id='div_pt2_20' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_20'>通过</button>
+    <div id='div_pt2_20' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_20: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_21' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme28</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_21'>通过</button>
+    <div id='div_pt2_21' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_21'>通过</button>
+    <div id='div_pt2_21' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_21: 1101111011111111111110111011101100111011111111111111111100000000
+1101111011111111111111111111111111111111011001111111111100000000
+均值哈希算法相似度： 91
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_22' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme29</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_22'>通过</button>
+    <div id='div_pt2_22' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_22'>通过</button>
+    <div id='div_pt2_22' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_22: 1101111011111111111111011111111111111101111111111111101100000000
+1101111011111111111111011111111111111101111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_23' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_23: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_24' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme30</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_24' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_24'>通过</button>
+    <div id='div_pt2_24' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_24' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_24'>通过</button>
+    <div id='div_pt2_24' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_24: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_25' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme31</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_25' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_25'>通过</button>
+    <div id='div_pt2_25' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_25' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_25'>通过</button>
+    <div id='div_pt2_25' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_25: 1101111011111111111110111011101100111011011111111111111110000000
+1101111011111111111111111111111111111111011001111111111100000000
+均值哈希算法相似度： 91
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_26' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme32</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_26' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_26'>通过</button>
+    <div id='div_pt2_26' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_26' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_26'>通过</button>
+    <div id='div_pt2_26' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_26: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111101111111111111101100000000
+均值哈希算法相似度： 99
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_27' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme33</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_27' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_27'>通过</button>
+    <div id='div_pt2_27' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_27' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_27'>通过</button>
+    <div id='div_pt2_27' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_27: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_28' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme34</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_28' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_28'>通过</button>
+    <div id='div_pt2_28' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_28' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_28'>通过</button>
+    <div id='div_pt2_28' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_28: 1101111011111111111110111110111111111011111011111111111100000000
+1101111011111111111110111110111111111011111011111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_29' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme35</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_29' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_29'>通过</button>
+    <div id='div_pt2_29' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_29' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_29'>通过</button>
+    <div id='div_pt2_29' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_29: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_30' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme36</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_30' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_30'>通过</button>
+    <div id='div_pt2_30' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_30' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_30'>通过</button>
+    <div id='div_pt2_30' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_30: 1101111011111101111110011100000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 99
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_31' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme37</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_31' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_31'>通过</button>
+    <div id='div_pt2_31' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_31' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_31'>通过</button>
+    <div id='div_pt2_31' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_31: 1101111011111111111110111110101111111011111011111011111111111111
+1101111011111111111110111110101111111011111011111011111111111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_32' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme38</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_32' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_32'>通过</button>
+    <div id='div_pt2_32' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_32' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_32'>通过</button>
+    <div id='div_pt2_32' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_32: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_33' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme39</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_33' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_33'>通过</button>
+    <div id='div_pt2_33' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_33' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_33'>通过</button>
+    <div id='div_pt2_33' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_33: 1101111011111111111111011111000100000011000000001111110011111111
+1101111011111111111111011111000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_34' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_34' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_34'>通过</button>
+    <div id='div_pt2_34' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_34' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_34'>通过</button>
+    <div id='div_pt2_34' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_34: 1101111011111111111111111111111100111111111111111111111100000000
+1101111011111111111111111111111111111111111011111111111100000000
+均值哈希算法相似度： 97
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_35' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme40</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_35' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_35'>通过</button>
+    <div id='div_pt2_35' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_35' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_35'>通过</button>
+    <div id='div_pt2_35' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_35: 1101111011111111111111111110111111111011111011111111111100000000
+1101111011111111111101111111111100111111011111111111111100000000
+均值哈希算法相似度： 93
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_36' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme41</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_36' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_36'>通过</button>
+    <div id='div_pt2_36' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_36' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_36'>通过</button>
+    <div id='div_pt2_36' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_36: 1101111011111111111111111111111111111111111111111111101100000000
+1101111011111111111111111111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_37' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme42</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_37' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_37'>通过</button>
+    <div id='div_pt2_37' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_37' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_37'>通过</button>
+    <div id='div_pt2_37' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_37: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_38' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme43</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_38' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_38'>通过</button>
+    <div id='div_pt2_38' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_38' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_38'>通过</button>
+    <div id='div_pt2_38' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_38: 1101111011111111111111111110111111111011111011111011111100000000
+1101111011111111111111111110111111111011111011111011111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_39' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme44</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_39' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_39'>通过</button>
+    <div id='div_pt2_39' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_39' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_39'>通过</button>
+    <div id='div_pt2_39' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_39: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_40' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme45</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_40' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_40'>通过</button>
+    <div id='div_pt2_40' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_40' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_40'>通过</button>
+    <div id='div_pt2_40' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_40: 1101111011111111111111011111000100000011000000001111110011111111
+1101111011111111111111011111000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_41' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme46</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_41' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_41'>通过</button>
+    <div id='div_pt2_41' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_41' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_41'>通过</button>
+    <div id='div_pt2_41' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_41: 1101111011111111111111111101101111111111011011111111111100000000
+1101111011111111111111111011101100111101111111111111111100000000
+均值哈希算法相似度： 93
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_42' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme47</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_42' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_42'>通过</button>
+    <div id='div_pt2_42' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_42' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_42'>通过</button>
+    <div id='div_pt2_42' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_42: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_43' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme48</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_43' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_43'>通过</button>
+    <div id='div_pt2_43' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_43' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_43'>通过</button>
+    <div id='div_pt2_43' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_43: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_44' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme49</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_44' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_44'>通过</button>
+    <div id='div_pt2_44' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_44' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_44'>通过</button>
+    <div id='div_pt2_44' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_44: 1101111011111111111111111011101100111101011111111111111100000000
+1101111011111111111111111101101111111111011011111111111100000000
+均值哈希算法相似度： 94
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_45' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_45' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_45'>通过</button>
+    <div id='div_pt2_45' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_45' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_45'>通过</button>
+    <div id='div_pt2_45' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_45: 1101111011111111111111111111111111111111111111111111111100000000
+1101111011111111111111111111111111111111111111111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_46' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme50</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_46' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_46'>通过</button>
+    <div id='div_pt2_46' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_46' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_46'>通过</button>
+    <div id='div_pt2_46' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_46: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_47' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme51</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_47' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_47'>通过</button>
+    <div id='div_pt2_47' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_47' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_47'>通过</button>
+    <div id='div_pt2_47' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_47: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_48' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme52</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_48' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_48'>通过</button>
+    <div id='div_pt2_48' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_48' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_48'>通过</button>
+    <div id='div_pt2_48' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_48: 1101111011111111111110111110111111111111111011111111111100000000
+1101111011111111111110111110111111111111111011111111111100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_49' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme53</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_49' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_49'>通过</button>
+    <div id='div_pt2_49' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_49' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_49'>通过</button>
+    <div id='div_pt2_49' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_49: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_50' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme54</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_50' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_50'>通过</button>
+    <div id='div_pt2_50' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_50' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_50'>通过</button>
+    <div id='div_pt2_50' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_50: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_51' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme55</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_51' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_51'>通过</button>
+    <div id='div_pt2_51' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_51' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_51'>通过</button>
+    <div id='div_pt2_51' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_51: 1101111011111111111111011111110101010011001000111011111011111111
+1101111011111111111111011111110101010011001000111011111011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_52' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme56</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_52' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_52'>通过</button>
+    <div id='div_pt2_52' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_52' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_52'>通过</button>
+    <div id='div_pt2_52' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_52: 1101111000111111000000110000000100000000000000001001011111111111
+1101111000111111000000110000000100000000000000001001011111111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_53' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme57</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_53' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_53'>通过</button>
+    <div id='div_pt2_53' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_53' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_53'>通过</button>
+    <div id='div_pt2_53' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_53: 1101111000111111000000111000000110101000111101001001010111111111
+1101111000111111000000111000000111100000111101001001010111111111
+均值哈希算法相似度： 98
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_54' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme58</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_54' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_54'>通过</button>
+    <div id='div_pt2_54' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_54' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_54'>通过</button>
+    <div id='div_pt2_54' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_54: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_55' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme59</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_55' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_55'>通过</button>
+    <div id='div_pt2_55' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_55' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_55'>通过</button>
+    <div id='div_pt2_55' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_55: 1101111011111101111110111111001101010011101011111001110011111111
+1101111011111101111110111111001101010011101011111001110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_56' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme6</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_56' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_56'>通过</button>
+    <div id='div_pt2_56' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_56' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_56'>通过</button>
+    <div id='div_pt2_56' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_56: 1101111011111101111110011110011100011111000000001111110011111111
+1101111011111101111110011110011100011111000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_57' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme60</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_57' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_57'>通过</button>
+    <div id='div_pt2_57' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_57' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_57'>通过</button>
+    <div id='div_pt2_57' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_57: 1101111011111111111111011111111111111111111111101111101100000000
+1101111011111111111111011111111111111111111111101111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_58' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme61</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_58' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_58'>通过</button>
+    <div id='div_pt2_58' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_58' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_58'>通过</button>
+    <div id='div_pt2_58' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_58: 1101111011111101111110011110000100000011000000001111110011111111
+1101111011111101111110011110000100000011000000001111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_59' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme7</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_59' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_59'>通过</button>
+    <div id='div_pt2_59' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_59' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_59'>通过</button>
+    <div id='div_pt2_59' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_59: 1101111011111111111111111100101111111110111111111011110111111111
+1101111011111111111111111100101111111110111111111011110111111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_60' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme8</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_60' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_60'>通过</button>
+    <div id='div_pt2_60' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_60' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_60'>通过</button>
+    <div id='div_pt2_60' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_60: 1101111011111111111111011111111111111111111111111111101100000000
+1101111011111111111111011111111111111111111111111111101100000000
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_61' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_theme9</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_61' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_61'>通过</button>
+    <div id='div_pt2_61' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_61' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_61'>通过</button>
+    <div id='div_pt2_61' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_61: 1101111011111101111110011110101110000011001010011111110011111111
+1101111011111101111110011110101110000011001010011111110011111111
+均值哈希算法相似度： 100
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>79</td>
+    <td>78</td>
+    <td>1</td>
+    <td>0</td>
+    <td>通过率：98.73%</td>
+</tr>
+</table>
+
+<div id='ending'> </div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>

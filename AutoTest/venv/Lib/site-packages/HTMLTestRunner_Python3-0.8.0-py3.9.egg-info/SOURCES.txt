@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+HTMLTestRunner/HTMLTestRunner.py
+HTMLTestRunner/__init__.py
+HTMLTestRunner_Python3.egg-info/PKG-INFO
+HTMLTestRunner_Python3.egg-info/SOURCES.txt
+HTMLTestRunner_Python3.egg-info/dependency_links.txt
+HTMLTestRunner_Python3.egg-info/top_level.txt
+HTMLTestRunner_Python3.egg-info/zip-safe
