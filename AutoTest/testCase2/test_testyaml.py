@@ -27,11 +27,12 @@ class MyTestCaseBuffer(unittest.TestCase):
         mylogger.info("用例执行结束")
 
 
-    @ddt.file_data('../dataYaml/buffer.yaml')
-    def test_a1(self, **para):
+    @ddt.file_data('../dataYaml/buffer.yml')
+    def test_buffer(self, **para):
         buffer.setBufferparaAndAnalyst(self.driver,para.get('datasource'),para.get('dataset'),
                                        para.get('type'),para.get('distance'),para.get('ismerge'),
                                        para.get('resultdatasource'),para.get('resultdataset'))
+        buffer.resultCompare(self,self.driver,para.get('count'),para.get('islocation'))
 
 if __name__ == '__main__':
     unittest.main()
