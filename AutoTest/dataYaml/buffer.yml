@@ -6,7 +6,7 @@
     ismerge: 0
     resultdatasource: 'TestResult'
     resultdataset: 'BufferByPoint'
-    count: 641
+    count: '641'
     islocation: 1
 点缓冲区分析-合并缓冲区:
       datasource: 'ChongQing'
@@ -16,5 +16,5 @@
       ismerge: 1
       resultdatasource: 'TestResult'
       resultdataset: 'BufferByPointMerge'
-      count: 1
+      count: '1'
       islocation: 0
