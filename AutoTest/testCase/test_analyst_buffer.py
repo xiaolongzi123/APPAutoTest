@@ -1,6 +1,7 @@
 import unittest
 import os
 import sys
+# 必须加上以下几个路径，否则部署CI会报错找不到路径
 current_directory = os.path.dirname(os.path.abspath(__file__))
 root_path = os.path.abspath(os.path.dirname(current_directory) + os.path.sep + ".")
 sys.path.append(root_path)
@@ -42,7 +43,7 @@ class MyTestCaseBuffer(unittest.TestCase):
 
     # 点数据单缓冲区分析（合并缓冲区）
     def test_buffer2(self):
-        buffer.setBufferparaAndAnalyst(self.driver,"ChongQing","风景名胜",0,1000,1,"TestResult","BufferByPoint")
+        buffer.setBufferparaAndAnalyst(self.driver,"ChongQing","风景名胜",0,1000,1,"TestResult","BufferByPointMerge")
         buffer.resultCompare(self,self.driver,"1",0)
 
     # 线数据单缓冲区分析（平头缓冲）

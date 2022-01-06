@@ -42,7 +42,7 @@ class MyTestCaseExport(unittest.TestCase):
         interpolation.interpolationAnalyst(self.driver,"距离反比权重",srcDatasource,srcDataset,"pop2019",desDatasource,desDataset,"0","0")
         interpolation.resultCompare(self,self.driver,mapName)
     #插值分析-样条
-    @unittest.skip("bug")
+    # @unittest.skip("bug")
     def test_interpolation2(self):
         srcDatasource = "ChongQing"
         srcDataset = "风景名胜"

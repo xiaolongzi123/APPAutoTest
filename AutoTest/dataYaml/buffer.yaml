@@ -1,0 +1,16 @@
+点缓冲区分析:
+    datasource: 'ChongQing'
+    dataset:  '风景名胜'
+    type: 0
+    distance: 1000
+    ismerge: 0
+    resultdatasource: 'TestResult'
+    resultdataset: 'BufferByPoint'
+点缓冲区分析-合并缓冲区:
+      datasource: 'ChongQing'
+      dataset: '风景名胜'
+      type: 0
+      distance: 1000
+      ismerge: 1
+      resultdatasource: 'TestResult'
+      resultdataset: 'BufferByPointMerge'

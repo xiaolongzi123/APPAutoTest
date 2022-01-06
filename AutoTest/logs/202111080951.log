@@ -1,6 +1,0 @@
-2021-11-08 09:51:28,366 - TestMyLog - INFO - 开始执行用例
-2021-11-08 09:51:28,366 - TestMyLog - INFO - 开始执行用例
-2021-11-08 09:52:01,425 - TestMyLog - INFO - 页面未找到元素://android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.ScrollView[1]/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.ViewGroup[1]
-2021-11-08 09:52:01,425 - TestMyLog - INFO - 页面未找到元素://android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.ScrollView[1]/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.ViewGroup[1]
-2021-11-08 09:52:03,386 - TestMyLog - INFO - 用例执行结束
-2021-11-08 09:52:03,386 - TestMyLog - INFO - 用例执行结束
